@@ -7,38 +7,27 @@ export class ShowGoodsListe extends Component{
     displayName = ShowGoodsListe.name
 
     constructor(props) {
-        debugger;
         super(props);
-        this.state = { warenDaten: [] };
+        this.state = { warenDatens: [], loading: true };
 
-        method:'GET',
-        fetch('https://localhost:44323/api/LagerObjekt',
-            {
-
-                mode: 'no-cors'
-            }
-            ).then(data => {
-                this.setState({ warenDaten: data });
+        fetch('api/WebServiceHelper/getData')
+            .then(response => response.json())
+            .then(data => {
+                this.setState({ warenDatens: data, loading: false });
             });
     }
 
-
-
-
-
-    static getWarenDaten(warenDaten) {
-        return (<div>
-            <table className='table'  >
+    static renderWarenDatenTable(warenDatens) {
+        return (
+            <table className='table'>
                 <thead>
                     <tr>
-                        <th>Artikelbezeichnung</th>
-                        <th>Temp. (C)</th>
-                        <th>Temp. (F)</th>
-                        <th>Summary</th>
+                        <th>Id</th>
+                        <th>Bezeichnung</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {warenDaten.map(warenDaten =>
+                    {warenDatens.map(warenDaten =>
                         <tr key={warenDaten.id}>
                             <td>{warenDaten.id}</td>
                             <td>{warenDaten.bezeichnung}</td>
@@ -46,18 +35,18 @@ export class ShowGoodsListe extends Component{
                     )}
                 </tbody>
             </table>
-
-        </div>            );
+        );
     }
 
     render() {
-        ShowGoodsListe.getWarenDaten(this.state.warenDaten);
+        let contents = this.state.loading
+            ? <p><em>Loading...</em></p>
+            : ShowGoodsListe.renderWarenDatenTable(this.state.warenDatens);
 
         return (
-            <div>
-                {ShowGoodsListe.getWarenDaten(this.state.warenDaten)}
-
-                </div>            
-            );
+            <div>                
+                {contents}
+            </div>
+        );
     }
 }
