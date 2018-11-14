@@ -3,9 +3,13 @@ using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using System.IO;
 using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 using System.Net.Http;
 using System.Text;
 using System.Collections.Specialized;
+using WebApplication3.Model;
+using System.Collections;
+using System.Linq;
 
 namespace WebApplication3.Controllers
 {
@@ -13,19 +17,16 @@ namespace WebApplication3.Controllers
     public class WebServiceHelperController:Controller
     {
         [HttpGet("[action]")]
-        public IEnumerable<string> getData()
+        public IEnumerable<LagerObjekt> getData()
         {
-            string requestUrl = "https://localhost:44323/api/Lager";
-
+            string requestUrl = "https://localhost:44323/api/LagerObjekt";
             var request = (HttpWebRequest)WebRequest.Create(requestUrl);
             request.Method = "GET";
             request.UserAgent = "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36";
             request.AutomaticDecompression = DecompressionMethods.Deflate | DecompressionMethods.GZip;
 
             var response = (HttpWebResponse)request.GetResponse();
-
             string content = string.Empty;
-
             using (var stream = response.GetResponseStream())
             {
                 using (var sr = new StreamReader(stream))
@@ -33,7 +34,14 @@ namespace WebApplication3.Controllers
                     content = sr.ReadToEnd();
                 }
             }
-            return null;
+            IList<LagerObjekt> liste = new List<LagerObjekt>();
+            JArray a = JArray.Parse(content);
+
+            for(int i = 0; i < a.Count; i++)
+            {
+                liste.Add(JsonConvert.DeserializeObject<LagerObjekt>(a[i].ToString()));
+            }
+            return liste;
         }
 
 
