@@ -1,5 +1,6 @@
 ﻿import React, { Component } from 'react';
 import { ShowGoodsListe } from './ShowGoodsListe';
+import { InsertGoods } from './InsertGoods';
 
 
 export class ShowGoods extends Component {
@@ -13,6 +14,7 @@ export class ShowGoods extends Component {
     render() {
         return (
             <div>
+                <InsertGoods />
                 <h1>Waren anzeigen</h1>
                 <ShowGoodsListe />
             </div>

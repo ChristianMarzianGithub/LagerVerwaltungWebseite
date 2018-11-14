@@ -44,7 +44,7 @@ export class ShowGoodsListe extends Component{
             : ShowGoodsListe.renderWarenDatenTable(this.state.warenDatens);
 
         return (
-            <div>                
+            <div>                        
                 {contents}
             </div>
         );
