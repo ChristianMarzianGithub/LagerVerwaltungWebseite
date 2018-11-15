@@ -48,11 +48,6 @@ export class NavMenu extends Component {
              </Link>
             </NavItem>
             <NavItem>
-                <Link to={'/'}>
-                    <span id='LagerLink'>Neue Ware einlagern</span>
-             </Link>
-            </NavItem>  
-            <NavItem>
                 <Link to={'/'} >
                     <span id='LagerLink'>Administration</span>
                 </Link>

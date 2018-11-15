@@ -2,7 +2,7 @@
 import 'react-dropdown/style.css';
 import { ShowGoodsListe } from './ShowGoodsListe';
 import { InsertGoods } from './InsertGoods';
-import { DropDownObjekt } from './DropDownObjekt';
+import { DropDownListe } from './DropDownListe';
 
 export class ShowGoods extends Component {
     displayName = ShowGoods.name;
@@ -11,11 +11,12 @@ export class ShowGoods extends Component {
         super(props);
         
     }
-    render() {      
-        
+    render() {    
         return (
-            <div>
-                <DropDownObjekt />
+            <div>                
+                <DropDownListe label='LagerArt' webservice='getDataOptionsLagerArt' />
+                <DropDownListe label='Lager' webservice='getDataOptionsLager' />
+                <DropDownListe label='Kategorie' webservice='getDataOptionsLagerObjekt' />
                 <InsertGoods />
                 <h1>Waren anzeigen</h1>
                 <ShowGoodsListe />

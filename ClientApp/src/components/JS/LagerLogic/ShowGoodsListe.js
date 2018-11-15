@@ -10,7 +10,7 @@ export class ShowGoodsListe extends Component{
         super(props);
         this.state = { warenDatens: [], loading: true };
 
-        fetch('api/WebServiceHelper/getData')
+        fetch('api/WebServiceHelper/getDataLagerObjekt')
             .then(response => response.json())
             .then(data => {
                 this.setState({ warenDatens: data, loading: false });

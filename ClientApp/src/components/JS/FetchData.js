@@ -45,9 +45,7 @@ export class FetchData extends Component {
       : FetchData.renderForecastsTable(this.state.forecasts);
 
     return (
-      <div>
-        <h1>Weather forecast</h1>
-        <p>This component demonstrates fetching data from the server.</p>
+      <div>        
         {contents}
       </div>
     );
