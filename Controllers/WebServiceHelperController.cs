@@ -4,12 +4,7 @@ using System.Net;
 using System.IO;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
-using System.Net.Http;
-using System.Text;
-using System.Collections.Specialized;
 using WebApplication3.Model;
-using System.Collections;
-using System.Linq;
 
 namespace WebApplication3.Controllers
 {
@@ -17,9 +12,15 @@ namespace WebApplication3.Controllers
     public class WebServiceHelperController:Controller
     {
         [HttpGet("[action]")]
-        public IEnumerable<LagerObjekt> getData()
+        public IEnumerable<LagerObjekt> getDataLagerObjekt()
         {
-            string requestUrl = "https://localhost:44323/api/LagerObjekt";
+            IList<LagerObjekt> liste = getDataLagerObjektListe<LagerObjekt>();
+            return liste;
+        }
+
+        public IList<T> getDataLagerObjektListe<T>()
+        {
+            string requestUrl = "https://localhost:44323/api/" + typeof(T).Name;
             var request = (HttpWebRequest)WebRequest.Create(requestUrl);
             request.Method = "GET";
             request.UserAgent = "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36";
@@ -34,17 +35,75 @@ namespace WebApplication3.Controllers
                     content = sr.ReadToEnd();
                 }
             }
-            IList<LagerObjekt> liste = new List<LagerObjekt>();
+            IList<T> liste = new List<T>();
             JArray a = JArray.Parse(content);
 
-            for(int i = 0; i < a.Count; i++)
+            for (int i = 0; i < a.Count; i++)
             {
-                liste.Add(JsonConvert.DeserializeObject<LagerObjekt>(a[i].ToString()));
+                liste.Add(JsonConvert.DeserializeObject<T>(a[i].ToString()));
             }
             return liste;
         }
 
+        [HttpGet("[action]")]
+        public IEnumerable<Options> getDataOptionsLagerObjekt()
+        {
+            IList<LagerObjekt> listeLagerObjekt = getDataLagerObjektListe<LagerObjekt>();
+            IList<Options> listeOptionsLagerObjekt = new List<Options>();
+            for(int i = 0; i < listeLagerObjekt.Count; i++)
+            {
+                listeOptionsLagerObjekt.Add(
+                    new Options
+                    {
+                        label = listeLagerObjekt[i].bezeichnung,
+                        values = listeLagerObjekt[i].ID.ToString()
+                    }
+                );
+            }
+            return listeOptionsLagerObjekt;
+        }
 
+        [HttpGet("[action]")]
+        public IEnumerable<Options> getDataOptionsLager()
+        {
+            
+            IList<Lager> listeLager = getDataLagerObjektListe<Lager>();
+            IList<Options> listeOptions = new List<Options>();
+            
+            for (int i = 0; i < listeLager.Count; i++)
+            {
+                listeOptions.Add(
+                    new Options
+                    {
+                        label = listeLager[i].bezeichnung,
+                        values = listeLager[i].id
+                    }
+                );
+            }
+            
+            return listeOptions;
+        }
+
+        [HttpGet("[action]")]
+        public IEnumerable<Options> getDataOptionsLagerArt()
+        {
+
+            IList<Lager> listeLager = getDataLagerObjektListe<Lager>();
+            IList<Options> listeOptions = new List<Options>();
+
+            for (int i = 0; i < listeLager.Count; i++)
+            {
+                listeOptions.Add(
+                    new Options
+                    {
+                        label = listeLager[i].bezeichnung,
+                        values = listeLager[i].id
+                    }
+                );
+            }
+
+            return listeOptions;
+        }
         [HttpPost("[action]")]
         public void postData([FromBody]object value)
         {
@@ -68,5 +127,8 @@ namespace WebApplication3.Controllers
                 var result = streamReader.ReadToEnd();
             }
         }   
+
+
+        
     }
 }
