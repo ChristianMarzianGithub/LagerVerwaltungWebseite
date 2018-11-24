@@ -18,6 +18,7 @@ namespace WebApplication3.Controllers
             return liste;
         }
 
+
         public IList<T> getDataLagerObjektListe<T>()
         {
             string requestUrl = "https://localhost:44323/api/" + typeof(T).Name;
