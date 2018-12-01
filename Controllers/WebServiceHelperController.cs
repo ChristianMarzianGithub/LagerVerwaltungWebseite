@@ -4,9 +4,8 @@ using System.Net;
 using System.IO;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
-using WebApplication3.Model;
 
-namespace WebApplication3.Controllers
+namespace LagerVerwaltungWebseite.Controllers
 {
     [Route("api/[controller]")]
     public class WebServiceHelperController:Controller
@@ -25,7 +24,7 @@ namespace WebApplication3.Controllers
         public IList<T> getDataLagerObjektListe<T>()
         {
 
-            string requestUrlh = "https://localhost:44323/api/" + typeof(T).Name;
+            string requestUrl = "https://localhost:44323/api/" + typeof(T).Name;
             var request = (HttpWebRequest)WebRequest.Create(requestUrl);
             request.Method = "GET";
             request.UserAgent = "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36";
