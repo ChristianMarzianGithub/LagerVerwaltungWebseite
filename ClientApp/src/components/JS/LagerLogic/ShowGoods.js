@@ -1,5 +1,4 @@
 ﻿import React, { Component } from 'react';
-import 'react-dropdown/style.css';
 import { ShowGoodsListe } from './ShowGoodsListe';
 import { InsertGoods } from './InsertGoods';
 import { DropDownListe } from './DropDownListe';
