@@ -34,7 +34,7 @@ namespace LagerVerwaltungWebseite.Controllers
             string content = string.Empty;
 
             JArray a;
-            IList<Lager> liste = new List<Lager>();
+            IList<T> liste = new List<T>();
             using (var stream = response.GetResponseStream())
             {
                 using (var sr = new StreamReader(stream))
@@ -49,14 +49,14 @@ namespace LagerVerwaltungWebseite.Controllers
                     */
                 }
             }
-            liste = JsonConvert.DeserializeObject<List<Lager>>(content);
+            //liste = JsonConvert.DeserializeObject<List<T>>(content);
             a = JArray.Parse(content);
 
             for (int i = 0; i < a.Count; i++)
             {
-                liste.Add(JsonConvert.DeserializeObject<Lager>(a[i].ToString()));
+                liste.Add(JsonConvert.DeserializeObject<T>(a[i].ToString()));
             }
-            return null;
+            return liste;
         }
 
         [HttpGet("[action]")]
@@ -70,7 +70,7 @@ namespace LagerVerwaltungWebseite.Controllers
                     new Options
                     {
                         label = listeLagerObjekt[i].bezeichnung,
-                        values = listeLagerObjekt[i].ID.ToString()
+                        values = listeLagerObjekt[i].id.ToString()
                     }
                 );
             }

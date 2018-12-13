@@ -2,7 +2,8 @@
 {
     public class Lager
     {
-        public string bezeichnung { get; internal set; }
-        public string id { get; internal set; }
+        public string lagerArtId { get; set; }
+        public string id { get; set; }
+        public string bezeichnung { get; set; }
     }
 }
